@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff0f5">
+<meta name="description" content="Virtual Gift Studio — create a personal digital gift.">
+<title>Virtual Gift Studio</title>
+<style>
+:root {
+  --pink:#e879a8;
+  --deep:#9d416e;
+  --ink:#553849;
+  --line:#f3d8e4;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  font-family:Georgia,serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 5%,#ffe2ed,transparent 28%),
+    radial-gradient(circle at 95% 35%,#f0e5ff,transparent 28%),
+    #fff9fb;
+  min-height:100vh;
+}
+button,input,textarea,select {font:inherit}
+.top {
+  max-width:1120px;
+  margin:auto;
+  padding:22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand {font-size:20px;font-weight:bold}
+.brand span {color:var(--pink)}
+.tools {display:flex;gap:9px;align-items:center}
+.pill,select {
+  border:1px solid var(--line);
+  background:white;
+  color:var(--ink);
+  border-radius:999px;
+  padding:10px 13px;
+}
+.hero {
+  max-width:1000px;
+  margin:28px auto 34px;
+  padding:28px 22px;
+  text-align:center;
+}
+.eyebrow {
+  color:var(--deep);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font:700 11px Arial;
+}
+.hero h1 {
+  font-size:clamp(38px,8vw,72px);
+  line-height:1.03;
+  margin:15px 0;
+  color:#8e4568;
+}
+.hero p {
+  font:16px/1.7 Arial;
+  color:#896b7b;
+  max-width:610px;
+  margin:0 auto 22px;
+}
+.spark {font-size:30px;letter-spacing:12px;margin:12px}
+.btn {
+  border:0;
+  border-radius:999px;
+  padding:13px 22px;
+  background:linear-gradient(135deg,#ed8db4,#bd78b8);
+  color:white;
+  cursor:pointer;
+  box-shadow:0 8px 22px #d889ad40;
+}
+.btn.secondary {
+  background:white;
+  color:var(--deep);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+.section {
+  max-width:1050px;
+  margin:auto;
+  padding:18px 22px 44px;
+}
+.section h2 {
+  text-align:center;
+  font-size:30px;
+  color:#8e4568;
+}
+.sub {
+  text-align:center;
+  font:14px Arial;
+  color:#987e8b;
+  margin-bottom:25px;
+}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+.card {
+  background:#ffffffd9;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:24px 18px;
+  text-align:center;
+  box-shadow:0 12px 32px #9c567012;
+}
+.emoji {font-size:45px}
+.card h3 {font-size:22px;color:#934e70}
+.card p {
+  font:14px/1.55 Arial;
+  color:#907887;
+  min-height:44px;
+}
+.price {
+  font:700 16px Arial;
+  color:var(--deep);
+  margin:14px;
+}
+.builder {
+  max-width:760px;
+  margin:0 auto 60px;
+  background:#ffffffdc;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:25px;
+  box-shadow:0 15px 40px #9c567012;
+}
+.field {
+  display:grid;
+  gap:7px;
+  margin:14px 0;
+  font:14px Arial;
+  color:#79586b;
+}
+.field input,.field textarea {
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:12px;
+  background:#fffafd;
+  color:var(--ink);
+}
+.field textarea {min-height:88px}
+.actions {display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
+.preview {
+  display:none;
+  margin-top:20px;
+  padding:24px;
+  text-align:center;
+  border:1px dashed #e6a7c2;
+  border-radius:20px;
+  background:#fff1f6;
+}
+.preview.show {display:block}
+.preview .big {font-size:42px}
+.preview h3 {font-size:28px;color:#934e70}
+.preview p {
+  font:15px/1.6 Arial;
+  white-space:pre-wrap;
+}
+.footer {
+  text-align:center;
+  padding:25px;
+  color:#a18796;
+  font:12px Arial;
+}
+@media(max-width:720px) {
+  .cards {grid-template-columns:1fr}
+  .top {padding:16px}
+  .brand {font-size:17px}
+  .builder {margin:0 14px 40px;padding:19px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">♡ <span>Virtual</span> Gift Studio</div>
+  <div class="tools">
+    <select id="lang">
+      <option value="uz">🇺🇿 UZ</option>
+      <option value="ru">🇷🇺 RU</option>
+      <option value="en">🇬🇧 EN</option>
+      <option value="ky">🇰🇬 KY</option>
+      <option value="tg">🇹🇯 TJ</option>
+      <option value="kk">🇰🇿 KZ</option>
+    </select>
+    <button class="pill" id="music">♫ <span id="musicText">Musiqani yoqish</span></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow" data-i="eyebrow">SIZ UCHUN MAXSUS YARATILGAN</div>
+  <div class="spark">🌷 ✨ 💗</div>
+  <h1 data-i="title">Har bir sovg‘ada<br>bir hikoya bor</h1>
+  <p data-i="intro">Yaqin insoningizga oddiy xabardan ko‘ra ko‘proq narsani sovg‘a qiling. Ism va tilaklaringiz bilan o‘ziga xos virtual sovg‘a yarating.</p>
+  <button class="btn" onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" data-i="cta">Sovg‘a yaratish</button>
+</section>
+
+<section class="section">
+  <h2 data-i="choose">Sovg‘angizni tanlang</h2>
+  <p class="sub" data-i="chooseSub">Har bir lahza uchun kichik, esda qolarli syurpriz</p>
+  <div class="cards">
+    <article class="card">
+      <div class="emoji">🌹</div>
+      <h3 data-i="romTitle">Romantik sovg‘a</h3>
+      <p data-i="romDesc">Gullar, yuraklar va samimiy maktub bilan.</p>
+      <div class="price">20 000 UZS</div>
+      <button class="btn secondary" onclick="pick('rom')" data-i="select">Tanlash</button>
+    </article>
+    <article class="card">
+      <div class="emoji">🎂</div>
+      <h3 data-i="birthTitle">Tug‘ilgan kun</h3>
+      <p data-i="birthDesc">Bayramona tabrik va shirin tilaklar.</p>
+      <div class="price">20 000 UZS</div>
+      <button class="btn secondary" onclick="pick('birth')" data-i="select">Tanlash</button>
+    </article>
+    <article class="card">
+      <div class="emoji">💌</div>
+      <h3 data-i="customTitle">Maxsus sovg‘a</h3>
+      <p data-i="customDesc">O‘zingiz xohlagan matn va uslubda.</p>
+      <div class="price" data-i="from">20 000 UZS dan</div>
+      <button class="btn secondary" onclick="pick('custom')" data-i="select">Tanlash</button>
+    </article>
+  </div>
+</section>
+
+<section class="builder" id="builder">
+  <h2 data-i="make">O‘z sovg‘angizni yarating</h2>
+  <p class="sub" data-i="makeSub">Ma’lumotlarni kiriting va namunani ko‘ring.</p>
+
+  <label class="field">
+    <span data-i="typeLabel">Sovg‘a turi</span>
+    <select id="kind">
+      <option value="rom" data-i="romTitle">Romantik sovg‘a</option>
+      <option value="birth" data-i="birthTitle">Tug‘ilgan kun</option>
+      <option value="custom" data-i="customTitle">Maxsus sovg‘a</option>
+    </select>
+  </label>
+
+  <label class="field">
+    <span data-i="nameLabel">Kim uchun?</span>
+    <input id="recipient" maxlength="40" placeholder="Masalan: Aziz insonim">
+  </label>
+
+  <label class="field">
+    <span data-i="messageLabel">Tilagingiz</span>
+    <textarea id="message" maxlength="300" placeholder="Bu yerga samimiy tilagingizni yozing..."></textarea>
+  </label>
+
+  <div class="actions">
+    <button class="btn" id="previewBtn" data-i="preview">Namunani ko‘rish</button>
+    <button class="btn secondary" id="copyBtn" data-i="copy">Matnni nusxalash</button>
+  </div>
+
+  <div class="preview" id="preview">
+    <div class="big" id="prevEmoji">🌹</div>
+    <h3 id="prevTitle">Siz uchun 💗</h3>
+    <p id="prevMessage"></p>
+    <div>♡ ✨ ♡</div>
+  </div>
+</section>
+</main>
+
+<footer class="footer" data-i="footer">
+  Virtual Gift Studio · Har bir sovg‘a mehr bilan yaratiladi
+</footer>
+
+<script>
+const words = {
+uz:{
+eyebrow:'SIZ UCHUN MAXSUS YARATILGAN',
+title:'Har bir sovg‘ada<br>bir hikoya bor',
+intro:'Yaqin insoningizga oddiy xabardan ko‘ra ko‘proq narsani sovg‘a qiling. Ism va tilaklaringiz bilan o‘ziga xos virtual sovg‘a yarating.',
+cta:'Sovg‘a yaratish',choose:'Sovg‘angizni tanlang',
+chooseSub:'Har bir lahza uchun kichik, esda qolarli syurpriz',
+romTitle:'Romantik sovg‘a',romDesc:'Gullar, yuraklar va samimiy maktub bilan.',
+birthTitle:'Tug‘ilgan kun',birthDesc:'Bayramona tabrik va shirin tilaklar.',
+customTitle:'Maxsus sovg‘a',customDesc:'O‘zingiz xohlagan matn va uslubda.',
+from:'20 000 UZS dan',select:'Tanlash',
+make:'O‘z sovg‘angizni yarating',makeSub:'Ma’lumotlarni kiriting va namunani ko‘ring.',
+typeLabel:'Sovg‘a turi',nameLabel:'Kim uchun?',messageLabel:'Tilagingiz',
+preview:'Namunani ko‘rish',copy:'Matnni nusxalash',
+footer:'Virtual Gift Studio · Har bir sovg‘a mehr bilan yaratiladi',
+placeholderName:'Masalan: Aziz insonim',
+placeholderMsg:'Bu yerga samimiy tilagingizni yozing...',
+musicOn:'Musiqani yoqish',musicOff:'Musiqani o‘chirish',
+forYou:'Siz uchun',empty:'Avval tilagingizni yozing.'
+},
+ru:{
+eyebrow:'СОЗДАНО СПЕЦИАЛЬНО ДЛЯ ВАС',
+title:'В каждом подарке<br>есть своя история',
+intro:'Подарите близкому человеку больше, чем обычное сообщение. Создайте особенный виртуальный подарок.',
+cta:'Создать подарок',choose:'Выберите подарок',
+chooseSub:'Маленький сюрприз для особенного момента',
+romTitle:'Романтический подарок',romDesc:'Цветы, сердечки и искреннее письмо.',
+birthTitle:'День рождения',birthDesc:'Праздничное поздравление и тёплые пожелания.',
+customTitle:'Особенный подарок',customDesc:'С вашим текстом и оформлением.',
+from:'От 20 000 UZS',select:'Выбрать',
+make:'Создайте свой подарок',makeSub:'Заполните поля и посмотрите образец.',
+typeLabel:'Тип подарка',nameLabel:'Для кого?',messageLabel:'Ваше пожелание',
+preview:'Посмотреть образец',copy:'Скопировать текст',
+footer:'Virtual Gift Studio · Каждый подарок создан с теплом',
+placeholderName:'Например: Дорогой человек',
+placeholderMsg:'Напишите здесь своё пожелание...',
+musicOn:'Включить музыку',musicOff:'Выключить музыку',
+forYou:'Для вас',empty:'Сначала напишите пожелание.'
+},
+en:{
+eyebrow:'MADE ESPECIALLY FOR YOU',
+title:'Every gift has<br>a story to tell',
+intro:'Give someone special more than an ordinary message. Create a unique virtual gift with a heartfelt note.',
+cta:'Create a gift',choose:'Choose your gift',
+chooseSub:'A little memorable surprise for every occasion',
+romTitle:'Romantic gift',romDesc:'Flowers, hearts and a heartfelt letter.',
+birthTitle:'Birthday',birthDesc:'A festive greeting and warm wishes.',
+customTitle:'Custom gift',customDesc:'Your own message and style.',
+from:'From 20,000 UZS',select:'Choose',
+make:'Create your own gift',makeSub:'Fill in the details and preview your gift.',
+typeLabel:'Gift type',nameLabel:'Who is it for?',messageLabel:'Your message',
+preview:'Preview gift',copy:'Copy text',
+footer:'Virtual Gift Studio · Every gift is made with care',
+placeholderName:'For example: My dear',
+placeholderMsg:'Write your heartfelt message here...',
+musicOn:'Turn music on',musicOff:'Turn music off',
+forYou:'For you',empty:'Please write a message first.'
+},
+ky:{
+eyebrow:'СИЗ ҮЧҮН АТАЙЫН ЖАСАЛДЫ',
+title:'Ар бир белектин<br>өз баяны бар',
+intro:'Жакын адамыңызга өзгөчө виртуалдык белек тартуулаңыз.',
+cta:'Белек түзүү',choose:'Белегиңизди тандаңыз',
+chooseSub:'Ар бир учурга чакан сюрприз',
+romTitle:'Романтикалык белек',romDesc:'Гүлдөр, жүрөктөр жана чын дилден кат.',
+birthTitle:'Туулган күн',birthDesc:'Майрамдык куттуктоо жана жылуу каалоолор.',
+customTitle:'Өзгөчө белек',customDesc:'Өзүңүз каалаган текст жана жасалга.',
+from:'20 000 UZS баштап',select:'Тандоо',
+make:'Өз белегиңизди түзүңүз',makeSub:'Маалыматты киргизип, үлгүсүн көрүңүз.',
+typeLabel:'Белектин түрү',nameLabel:'Кимге?',messageLabel:'Каалооңуз',
+preview:'Үлгүсүн көрүү',copy:'Текстти көчүрүү',
+footer:'Virtual Gift Studio · Ар бир белек мээрим менен жасалат',
+placeholderName:'Мисалы: Кымбаттуу адамым',
+placeholderMsg:'Жылуу каалооңузду жазыңыз...',
+musicOn:'Музыканы күйгүзүү',musicOff:'Музыканы өчүрүү',
+forYou:'Сиз үчүн',empty:'Алгач каалооңузду жазыңыз.'
+},
+tg:{
+eyebrow:'МАХСУС БАРОИ ШУМО СОХТА ШУДААСТ',
+title:'Ҳар туҳфа<br>қиссаи худро дорад',
+intro:'Ба шахси азизатон туҳфаи виртуалии махсус ҳадя кунед.',
+cta:'Сохтани туҳфа',choose:'Туҳфаи худро интихоб кунед',
+chooseSub:'Сюрпризи хурди хотирмон барои ҳар лаҳза',
+romTitle:'Туҳфаи ошиқона',romDesc:'Гулҳо, дилҳо ва номаи самимӣ.',
+birthTitle:'Зодрӯз',birthDesc:'Табрики идона ва орзуҳои нек.',
+customTitle:'Туҳфаи махсус',customDesc:'Бо матн ва ороиши дилхоҳи шумо.',
+from:'Аз 20 000 UZS',select:'Интихоб',
+make:'Туҳфаи худро созед',makeSub:'Маълумотро ворид карда, намунаашро бинед.',
+typeLabel:'Навъи туҳфа',nameLabel:'Барои кӣ?',messageLabel:'Орзуи шумо',
+preview:'Намунаро дидан',copy:'Нусхабардории матн',
+footer:'Virtual Gift Studio · Ҳар туҳфа бо меҳр сохта мешавад',
+placeholderName:'Масалан: Азизи ман',
+placeholderMsg:'Орзуи самимии худро нависед...',
+musicOn:'Мусиқиро фаъол кардан',musicOff:'Мусиқиро хомӯш кардан',
+forYou:'Барои шумо',empty:'Аввал орзуи худро нависед.'
+},
+kk:{
+eyebrow:'СІЗ ҮШІН АРНАЙЫ ЖАСАЛҒАН',
+title:'Әр сыйлықтың<br>өз тарихы бар',
+intro:'Жақын адамыңызға ерекше виртуалды сыйлық жасаңыз.',
+cta:'Сыйлық жасау',choose:'Сыйлығыңызды таңдаңыз',
+chooseSub:'Әр сәтке арналған шағын тосынсый',
+romTitle:'Романтикалық сыйлық',romDesc:'Гүлдер, жүректер және шынайы хат.',
+birthTitle:'Туған күн',birthDesc:'Мерекелік құттықтау мен жылы тілектер.',
+customTitle:'Арнайы сыйлық',customDesc:'Өзіңіз қалаған мәтін мен безендіру.',
+from:'20 000 UZS бастап',select:'Таңдау',
+make:'Өз сыйлығыңызды жасаңыз',makeSub:'Мәліметтерді енгізіп, үлгісін көріңіз.',
+typeLabel:'Сыйлық түрі',nameLabel:'Кімге арналған?',messageLabel:'Тілегіңіз',
+preview:'Үлгіні көру',copy:'Мәтінді көшіру',
+footer:'Virtual Gift Studio · Әр сыйлық ықыласпен жасалады',
+placeholderName:'Мысалы: Қымбаттым',
+placeholderMsg:'Ізгі тілегіңізді осында жазыңыз...',
+musicOn:'Музыканы қосу',musicOff:'Музыканы өшіру',
+forYou:'Сізге',empty:'Алдымен тілегіңізді жазыңыз.'
+}
+};
+
+let lang='uz';
+let audioCtx=null;
+let musicOn=false;
+
+function applyLang(){
+ const t=words[lang];
+ document.documentElement.lang=lang;
+ document.querySelectorAll('[data-i]').forEach(el=>{
+  const k=el.dataset.i;
+  if(t[k]) el.innerHTML=t[k];
+ });
+ document.getElementById('recipient').placeholder=t.placeholderName;
+ document.getElementById('message').placeholder=t.placeholderMsg;
+ document.getElementById('musicText').textContent=musicOn?t.musicOff:t.musicOn;
+}
+document.getElementById('lang').addEventListener('change',e=>{
+ lang=e.target.value;
+ applyLang();
+});
+
+function pick(v){
+ document.getElementById('kind').value=v;
+ document.getElementById('builder').scrollIntoView({behavior:'smooth'});
+}
+
+const emojis={rom:'🌹',birth:'🎂',custom:'💌'};
+
+document.getElementById('previewBtn').onclick=()=>{
+ const t=words[lang];
+ const name=document.getElementById('recipient').value.trim()||t.forYou;
+ const msg=document.getElementById('message').value.trim();
+ if(!msg){alert(t.empty);return}
+ const v=document.getElementById('kind').value;
+ document.getElementById('prevEmoji').textContent=emojis[v];
+ document.getElementById('prevTitle').textContent=t.forYou+', '+name+' 💗';
+ document.getElementById('prevMessage').textContent=msg;
+ document.getElementById('preview').classList.add('show');
+};
+
+document.getElementById('copyBtn').onclick=async()=>{
+ const t=words[lang];
+ const name=document.getElementById('recipient').value.trim()||t.forYou;
+ const msg=document.getElementById('message').value.trim();
+ if(!msg){alert(t.empty);return}
+ try{
+  await navigator.clipboard.writeText(t.forYou+', '+name+' 💗\n\n'+msg);
+  alert('✓');
+ }catch(e){alert(msg)}
+};
+
+// Mayin instrumental ohang — foydalanuvchi tugmani bosganda boshlanadi.
+function startMusic(){
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC)return;
+ audioCtx=new AC();
+ const notes=[261.63,329.63,392,329.63,293.66,349.23,440,349.23];
+ let i=0;
+ function note(){
+  if(!musicOn||!audioCtx)return;
+  const o=audioCtx.createOscillator();
+  const g=audioCtx.createGain();
+  o.type='sine';
+  o.frequency.value=notes[i++%notes.length];
+  g.gain.setValueAtTime(.0001,audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(.035,audioCtx.currentTime+.12);
+  g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+1.1);
+  o.connect(g);
+  g.connect(audioCtx.destination);
+  o.start();
+  o.stop(audioCtx.currentTime+1.15);
+  setTimeout(note,850);
+ }
+ note();
+}
+
+document.getElementById('music').onclick=async()=>{
+ musicOn=!musicOn;
+ if(musicOn){
+  if(!audioCtx)startMusic();
+  else await audioCtx.resume();
+ }else if(audioCtx){
+  await audioCtx.suspend();
+ }
+ const t=words[lang];
+ document.getElementById('musicText').textContent=musicOn?t.musicOff:t.musicOn;
+};
+
+applyLang();
+</script>
+</body>
+</html>
